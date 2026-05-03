@@ -1,8 +1,9 @@
-import { useCategories } from "@/src/context/CategoryContext";
-import { formatarMoeda, useTransactions } from "@/src/context/TransactionContext";
+
 import { AlertCircle, ArrowDownLeft, ArrowUpRight, ChevronDown, Plus } from "lucide-react";
 import { useMemo, useState } from "react";
 import { TransactionRow } from "../TransactionRow";
+import { formatarMoeda, useTransactions } from "@/store/TransactionContext";
+import { useCategories } from "@/store/CategoryContext";
 
 const PERIODOS = ["Tudo", "Este mes", "Mes passado", "Este ano"] as const;
 type Periodo = (typeof PERIODOS)[number];

@@ -1,9 +1,7 @@
 import { useEffect, useState } from "react";
 import { X } from "lucide-react";
-import { useTransactions } from "../../context/TransactionContext";
-import type { Transaction, TransactionType } from "../../context/TransactionContext";
-import { useCategories } from "../../context/CategoryContext";
-import { dataHoje } from "../../context/TransactionContext";
+import { dataHoje, Transaction, TransactionType, useTransactions } from "@/store/TransactionContext";
+import { useCategories } from "@/store/CategoryContext";
 
 // ─── Form state ───────────────────────────────────────────────────────────────
 
@@ -19,10 +17,10 @@ type FormErrors = Partial<Record<keyof FormState, string>>;
 
 function initialForm(tx?: Transaction): FormState {
   return {
-    tipo:      tx?.tipo      ?? "despesa",
-    valor:     tx ? String(tx.valor) : "",
+    tipo: tx?.tipo ?? "despesa",
+    valor: tx ? String(tx.valor) : "",
     categoria: tx?.categoria ?? "",
-    data:      tx?.data      ?? dataHoje(),
+    data: tx?.data ?? dataHoje(),
     descricao: tx?.descricao ?? "",
   };
 }
@@ -60,11 +58,11 @@ export default function TransactionModal() {
   function validate(): boolean {
     const e: FormErrors = {};
     const num = parseFloat(form.valor.replace(",", "."));
-    if (!form.valor.trim())        e.valor     = "Informe o valor.";
-    else if (isNaN(num))           e.valor     = "Valor deve ser um numero.";
-    else if (num <= 0)             e.valor     = "Valor deve ser maior que zero.";
-    if (!form.categoria.trim())    e.categoria = "Selecione uma categoria.";
-    if (!form.data.trim())         e.data      = "Informe a data.";
+    if (!form.valor.trim()) e.valor = "Informe o valor.";
+    else if (isNaN(num)) e.valor = "Valor deve ser um numero.";
+    else if (num <= 0) e.valor = "Valor deve ser maior que zero.";
+    if (!form.categoria.trim()) e.categoria = "Selecione uma categoria.";
+    if (!form.data.trim()) e.data = "Informe a data.";
     setErrors(e);
     return Object.keys(e).length === 0;
   }
@@ -73,10 +71,10 @@ export default function TransactionModal() {
     e.preventDefault();
     if (!validate()) return;
     const payload = {
-      tipo:      form.tipo,
-      valor:     parseFloat(form.valor.replace(",", ".")),
+      tipo: form.tipo,
+      valor: parseFloat(form.valor.replace(",", ".")),
       categoria: form.categoria,
-      data:      form.data,
+      data: form.data,
       descricao: form.descricao.trim(),
     };
     if (editing) {
@@ -145,13 +143,12 @@ export default function TransactionModal() {
                   key={tipo}
                   type="button"
                   onClick={() => set("tipo", tipo)}
-                  className={`py-2.5 rounded-lg text-sm font-semibold transition-all capitalize ${
-                    form.tipo === tipo
-                      ? tipo === "receita"
-                        ? "bg-emerald-400/20 text-emerald-400 shadow-sm"
-                        : "bg-red-400/20 text-red-400 shadow-sm"
-                      : "text-muted-foreground hover:text-foreground"
-                  }`}
+                  className={`py-2.5 rounded-lg text-sm font-semibold transition-all capitalize ${form.tipo === tipo
+                    ? tipo === "receita"
+                      ? "bg-emerald-400/20 text-emerald-400 shadow-sm"
+                      : "bg-red-400/20 text-red-400 shadow-sm"
+                    : "text-muted-foreground hover:text-foreground"
+                    }`}
                 >
                   {tipo === "receita" ? "Receita" : "Despesa"}
                 </button>
@@ -173,9 +170,8 @@ export default function TransactionModal() {
               placeholder="0,00"
               value={form.valor}
               onChange={(e) => set("valor", e.target.value)}
-              className={`w-full px-4 py-3 rounded-xl bg-input text-foreground text-sm placeholder:text-muted-foreground outline-none border transition-colors ${
-                errors.valor ? "border-destructive" : "border-border focus:border-ring"
-              }`}
+              className={`w-full px-4 py-3 rounded-xl bg-input text-foreground text-sm placeholder:text-muted-foreground outline-none border transition-colors ${errors.valor ? "border-destructive" : "border-border focus:border-ring"
+                }`}
             />
             {errors.valor && (
               <p role="alert" className="text-xs text-destructive mt-1.5">{errors.valor}</p>
@@ -191,9 +187,8 @@ export default function TransactionModal() {
               id="tm-cat"
               value={form.categoria}
               onChange={(e) => set("categoria", e.target.value)}
-              className={`w-full px-4 py-3 rounded-xl bg-input text-foreground text-sm outline-none border appearance-none transition-colors ${
-                errors.categoria ? "border-destructive" : "border-border focus:border-ring"
-              }`}
+              className={`w-full px-4 py-3 rounded-xl bg-input text-foreground text-sm outline-none border appearance-none transition-colors ${errors.categoria ? "border-destructive" : "border-border focus:border-ring"
+                }`}
             >
               <option value="" disabled>Selecione...</option>
               {categories.map((c) => (
@@ -215,9 +210,8 @@ export default function TransactionModal() {
               type="date"
               value={form.data}
               onChange={(e) => set("data", e.target.value)}
-              className={`w-full px-4 py-3 rounded-xl bg-input text-foreground text-sm outline-none border transition-colors ${
-                errors.data ? "border-destructive" : "border-border focus:border-ring"
-              }`}
+              className={`w-full px-4 py-3 rounded-xl bg-input text-foreground text-sm outline-none border transition-colors ${errors.data ? "border-destructive" : "border-border focus:border-ring"
+                }`}
             />
             {errors.data && (
               <p role="alert" className="text-xs text-destructive mt-1.5">{errors.data}</p>

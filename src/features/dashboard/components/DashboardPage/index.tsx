@@ -1,8 +1,8 @@
-import { formatarMoeda, useTransactions } from "@/src/context/TransactionContext";
+import { TransactionRow } from "@/features/transactions/components/TransactionRow";
+import { formatarMoeda, useTransactions } from "@/store/TransactionContext";
 import { AlertCircle, ChevronRight, Eye, EyeOff, Plus, TrendingDown, TrendingUp } from "lucide-react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { TransactionRow } from "../TransactionRow";
 
 export function DashboardPage() {
   const [saldoVisivel, setSaldoVisivel] = useState(true);

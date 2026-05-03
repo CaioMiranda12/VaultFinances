@@ -1,6 +1,7 @@
 import { ArrowDownLeft, ArrowUpRight, Pencil, Trash2 } from "lucide-react";
-import { useCategories } from "../context/CategoryContext";
-import { formatarData, formatarMoeda, Transaction, useTransactions } from "../context/TransactionContext";
+import { formatarData, formatarMoeda, Transaction, useTransactions } from "@/store/TransactionContext";
+import { useCategories } from "@/store/CategoryContext";
+
 
 export function TransactionRow({
   tx,

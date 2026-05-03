@@ -1,7 +1,8 @@
 import TransactionModal from "./TransactionModal";
 import ConfirmModal from "./ConfirmModal";
-import { useTransactions } from "../../context/TransactionContext";
-import { useCategories } from "../../context/CategoryContext";
+import { useTransactions } from "@/store/TransactionContext";
+import { useCategories } from "@/store/CategoryContext";
+
 
 export default function ModalContainer() {
   const { modal, closeModal, deleteTransaction } = useTransactions();
